@@ -1,0 +1,19 @@
+# Preserved local artifacts that are intentionally outside the published source tree.
+/junk/
+
+# Python bytecode, caches, and local environments.
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+.pytest_cache/
+.mypy_cache/
+
+# Jupyter and editor-generated files.
+.ipynb_checkpoints/
+.DS_Store
+
+# Frontend dependencies/build output, wherever a frontend is kept.
+node_modules/
+dist/
