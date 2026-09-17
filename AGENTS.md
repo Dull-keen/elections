@@ -1,6 +1,8 @@
-Assume that all users are bilingual in Russian and English. Always use Russian in READMEs and plots, prefer mostly English in comments and internal docs.
+Assume that all users are bilingual in Russian and English. Always use Russian in READMEs and plots, prefer mostly English in comments and internal docs. Use concise and informal language.
 
 Make the repository AI-friendly and easily reproducible. There should be comments next to code sufficiently explaining its usage and pitfalls. In README docs, assume that the user is non-expert and possibly even non-tecnical.
+
+Do not modify project root README.
 
 Before committing any scripts, make them cross-platform: they should always run on Linux and in principle on Mac and Windows (possibly via WSL or some compatibility layer; prefer Python over bash), but do not go extreme lengths to achieve it and do not bother with cross-platform testing (the user-side AI can make some adjustments of its own).
 

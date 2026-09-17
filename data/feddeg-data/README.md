@@ -22,4 +22,4 @@
 - 2025: https://disk.yandex.ru/d/7NBxGthNRmb0Cg
 - тренировка 2026: https://disk.yandex.ru/d/jrFFrCQpWd5Heg
 
-Сбор данных описан в `feddeg/feddeg-parser`.
+Сбор данных описан в `feddeg/parser`.
