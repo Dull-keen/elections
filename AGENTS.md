@@ -12,6 +12,8 @@ Prefer standard Python data stack for analysis.
 
 Point out any anomalies you find.
 
+When updating data during live elections, do quick regression tests against older data and general statistics available on the internet.
+
 All raw data is in data/ along with reproduction steps. Do not overwrite existing data, only read it.
 
 Use Moscow time (GMT+3).
