@@ -580,7 +580,7 @@ def last_existing_block_fingerprint(shard_dir: Path, completed: int) -> str | No
     The persisted chain identity is block 1, but two histories can share a genesis block and diverge
     afterwards (the September training chain and the election chain do exactly that: block 1 equal,
     block 2 different).  Before appending, the last stored block is compared with what the live chain
-    serves at that height, so a directory from another history is refused instead of being extended.
+    serves at that height, so a changed history can be reconciled without silently mixing suffixes.
     """
     for path, start, end in reversed(chunk_paths(shard_dir)):
         if end != completed:
@@ -614,6 +614,35 @@ def first_existing_block_fingerprint(shard_dir: Path) -> str | None:
             raise RuntimeError(f"cannot inspect first block in {path}: {error}") from error
         return block_fingerprint(block)
     return None
+
+
+def quarantine_history_tail(shard_dir: Path, tail_height: int) -> tuple[int, list[str]]:
+    """Move the chunk containing the local tail aside and return the new contiguous height.
+
+    The live check is deliberately limited to the last stored block: the ledger is append-only, so
+    only its tip may change between observations.  A chunk containing that block is moved in full;
+    retaining its valid prefix would require rewriting an existing file.  Later dangling chunks are
+    moved too, while the old bytes remain next to the dump for forensics.
+    """
+    chunks = chunk_paths(shard_dir)
+    suffix = [(path, start, end) for path, start, end in chunks if end >= tail_height]
+    if not suffix:
+        raise RuntimeError(f"no stored chunk contains tail block {tail_height}")
+    stamp = datetime.now(MSK).strftime("%Y%m%dT%H%M%S%f")
+    preserved: list[str] = []
+    try:
+        for path, _start, _end in suffix:
+            archived = path.with_name(f"{path.name}.history-{stamp}")
+            counter = 2
+            while archived.exists():
+                archived = path.with_name(f"{path.name}.history-{stamp}-{counter}")
+                counter += 1
+            path.rename(archived)
+            preserved.append(archived.name)
+        sync_directory(shard_dir)
+    except OSError as error:
+        raise RuntimeError(f"cannot quarantine divergent history in {shard_dir}: {error}") from error
+    return completed_through(shard_dir), preserved
 
 
 class AdaptiveLimiter:
@@ -1063,23 +1092,28 @@ def dump_shard(
             f"{chain.name}: saved height {completed} exceeds observed height {chain.height}"
         )
 
+    # Check the local tail even when it is exactly the observed tip: under the append-only model,
+    # only that last block may have changed between observations.  If it did, the containing chunk
+    # is rewritten below and the dump still ends in a contiguous, current state.
     if completed and chain.nodes:
         local_tail = last_existing_block_fingerprint(shard_dir, completed)
         if local_tail is None:
             raise RuntimeError(f"{chain.name}: cannot identify stored tail")
-        live_tail: str | None = None
         try:
-            blocks, node = client.get_blocks(chain, completed, completed)
+            blocks, _node = client.get_blocks(chain, completed, completed)
             live_tail = block_fingerprint(blocks[0])
         except RuntimeError as error:
             raise RuntimeError(f"{chain.name}: cannot verify live history; refusing to append") from error
-        if local_tail and live_tail and local_tail != live_tail:
-            raise RuntimeError(
-                f"{chain.name}: block {completed} on disk ({local_tail[:12]}) is not block {completed} "
-                f"of the chain this node serves ({live_tail[:12]}); this directory holds a different "
-                f"history - move it aside or dump into a fresh --output-dir"
+        if local_tail != live_tail:
+            # The only permitted mismatch is the local tip.  Rewriting its containing chunk keeps
+            # the active JSONL sequence contiguous without touching the older, trusted chunks.
+            tail_height = completed
+            completed, preserved = quarantine_history_tail(shard_dir, tail_height)
+            log(
+                f"{chain.name}: live tail differs at block {tail_height}; preserved "
+                f"{len(preserved)} old chunk(s) and resumed from {completed + 1}"
             )
-        if local_tail and live_tail:
+        else:
             log(f"{chain.name}: tail check ok (block {completed} matches the live chain)")
 
     start = completed + 1
