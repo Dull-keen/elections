@@ -1,0 +1,132 @@
+{
+  "schema": 1,
+  "algorithm": "SHA-256",
+  "canonicalization": {
+    "encoding": "UTF-8",
+    "line_endings": "LF",
+    "remove_utf8_bom": true,
+    "javascript_remove": "только строка sourceMappingURL в JavaScript"
+  },
+  "source_captures": [
+    "edg.gov.ru - Vsevolod Novikov.har",
+    "edg.gov.ru - Boris Novikov.har",
+    "edg.gov.ru - Andrei Belousov.har"
+  ],
+  "required": [
+    "html:edg.gov.ru:/",
+    "js:7.js",
+    "js:assets/env.js",
+    "js:assets/workers/gostEngineWorker.js",
+    "js:gost-crypto.js",
+    "js:main.js",
+    "js:polyfills.js",
+    "js:runtime.js",
+    "js:vendor.js"
+  ],
+  "files": {
+    "html:edg.gov.ru:/": {
+      "kind": "html",
+      "hashes": [
+        "2e355c992543da7cb66e61a3c2ce281fbdd46880b528c287e5777745ce930699",
+        "65f449ff121a6faa3e67488da354fe206172d78b2841776b8e9f96f690960857",
+        "e13c896e0f951b74496d99fabb127f2ca6c6f5b281ea3f0dd98a4fef08ba94a9"
+      ]
+    },
+    "html:vybory.gov.ru:/elections/auth": {
+      "kind": "html",
+      "hashes": [
+        "95f866e68be2d0caeae736607e47a75c354cb05dd6f113646812216c11d9ed6e"
+      ]
+    },
+    "js:7.js": {
+      "kind": "js",
+      "hashes": [
+        "22503c2b631f64e6522d06f559cb0878dabc2e68302d9b2d825d89d6cade46f5"
+      ]
+    },
+    "js:assets/env.js": {
+      "kind": "js",
+      "hashes": [
+        "408a0e139b4caa4a8300ac964dc1c67dececb9479be4e6fa4b739654d831434a",
+        "85436185a8252d40797bf3ca68105a0d7dfcd99b7bff710173445b80746e31da"
+      ]
+    },
+    "js:assets/workers/gostEngineWorker.js": {
+      "kind": "js",
+      "hashes": [
+        "2396234ba32f232749abb18845974cd6b0bf399bf43814fb89095f0c62232def"
+      ]
+    },
+    "js:common.js": {
+      "kind": "js",
+      "hashes": [
+        "ed891830d52330c400cc491b5e24f8f82c9504578e4611d83be3cdae16d84cb0"
+      ]
+    },
+    "js:gost-crypto.js": {
+      "kind": "js",
+      "hashes": [
+        "6e270d4f2dff3a46274614f3ba9138686f2a9e3e54014a392565f5fb0e87c40c",
+        "ce8e3c9b4341b93547d9d9ae15319df28b4527c99df7d8250c29c1d62892700b"
+      ]
+    },
+    "js:main.js": {
+      "kind": "js",
+      "hashes": [
+        "255990d8ef18760d9baa462feba6b279f4777fc070c14f914f4bde1402dd2eab",
+        "960c528eb331fbcaf03a5542f8c1d3cbd7be309311abb7daf0a4d0a4f7edb423"
+      ]
+    },
+    "js:pages-authentication-authentication-module.js": {
+      "kind": "js",
+      "hashes": [
+        "d60a9ef63d4f19a754871cf80e1da3b308ca19f71c1dfbd41e4fa22fb3feb4c6"
+      ]
+    },
+    "js:pages-election-election-page-module.js": {
+      "kind": "js",
+      "hashes": [
+        "bfc35a6694f49c66f228268d1b6645e93d40ce245ca973904060f4866acc16a6"
+      ]
+    },
+    "js:pages-key-generation-key-generation-page-module.js": {
+      "kind": "js",
+      "hashes": [
+        "d9180c1603c4e9da07b18a3f26f7c9997d1c30db9fa168db745ef67aa4594374"
+      ]
+    },
+    "js:pages-rules-rules-module.js": {
+      "kind": "js",
+      "hashes": [
+        "d0a1c7041c70bbe7a32e64e898dfee21ccceadd53dace37d8e59efcdd07fd94f"
+      ]
+    },
+    "js:polyfills.js": {
+      "kind": "js",
+      "hashes": [
+        "064c3d46dcf8afb79d853c3e822df9db3cb21e0176562adb8233c3b2a2a8363f",
+        "60f5916c847eede026653d569bd694b789436c2c89378db36e0e36ccb0492042"
+      ]
+    },
+    "js:runtime.js": {
+      "kind": "js",
+      "hashes": [
+        "2d4e7ab54c0530e9f20b7e4ea22706e5dc96a53ca6fee83273d22753d4df56b1",
+        "7be6260483780c59670280e3243147aec653618cadc6640b2e79abafbfd03802"
+      ]
+    },
+    "js:shared-modules-auth-auth-page-module.js": {
+      "kind": "js",
+      "hashes": [
+        "48a9ffa4d788699c05a13aa25f592b082967fb2c33c219bb5ee8753d1451720e"
+      ]
+    },
+    "js:vendor.js": {
+      "kind": "js",
+      "hashes": [
+        "830d906b8725ead3e3fd0cff3b74d5484e981b40b42fdb597184c347791e8491",
+        "fff0c82ce8852c583ac987c3f5f8a4a112bafa93bbeaea142c558def011a3ede"
+      ]
+    }
+  }
+}
